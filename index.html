@@ -8,6 +8,7 @@
 
   <!-- Google Fonts: Playfair Display (titoli eleganti) + DM Sans (corpo) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
 
   <style>
@@ -16,6 +17,32 @@
        Palette brand Melinda: Blu istituzionale, Verde eco, Rosso mela
     ============================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Focus visibile per accessibilità da tastiera */
+    *:focus-visible {
+      outline: 3px solid var(--blue-mid);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* Skip-link (Accessibilità) */
+    .skip-link {
+      position: fixed;
+      top: -100px;
+      left: 0;
+      background: var(--red-apple);
+      color: var(--white);
+      padding: 12px 24px;
+      z-index: 2000;
+      font-weight: 700;
+      text-decoration: none;
+      transition: top 0.3s;
+    }
+    .skip-link:focus {
+      top: 0;
+      outline: none; /* override del focus globale per non raddoppiare */
+      box-shadow: 0 0 0 3px var(--blue-deep);
+    }
 
     :root {
       --blue-deep:   #003B73;
@@ -48,74 +75,6 @@
       background: var(--white);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
-    }
-
-    /* ============================================================
-       SKIP LINK — Accessibilità tastiera / screen reader
-       Il link è invisibile finché non riceve focus; appare in cima
-       alla pagina permettendo agli utenti keyboard-only di saltare
-       direttamente al contenuto principale, bypassando la nav.
-       Requisito WCAG 2.1 – Criterio 2.4.1 (Bypass Blocks – Livello A)
-    ============================================================ */
-    .skip-link {
-      position: fixed;
-      top: -100px;          /* nascosto fuori dal viewport */
-      left: 16px;
-      z-index: 9999;
-      background: var(--blue-deep);
-      color: var(--white);
-      padding: 12px 24px;
-      border-radius: 0 0 8px 8px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: top 0.2s ease;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-    }
-    /* Si rende visibile solo quando riceve focus da tastiera */
-    .skip-link:focus {
-      top: 0;
-      outline: 3px solid var(--red-apple);
-      outline-offset: 2px;
-    }
-
-    /* ============================================================
-       FOCUS VISIBILE GLOBALE — Accessibilità tastiera
-       Fornisce un outline chiaramente visibile su tutti gli elementi
-       interattivi quando navigati via tastiera (Tab / Shift+Tab).
-       Requisito WCAG 2.1 – Criterio 1.4.11 e 2.4.7 (Livello AA)
-       Nota: :focus-visible (vs :focus) si attiva solo con tastiera,
-       non al click del mouse, per non disturbare l'estetica visiva.
-    ============================================================ */
-    :focus-visible {
-      outline: 3px solid var(--blue-mid);
-      outline-offset: 3px;
-      border-radius: 4px;
-    }
-    /* Bottoni e link pill: bordo arrotondato coerente col design */
-    .btn-primary:focus-visible,
-    .btn-secondary:focus-visible,
-    .btn-download:focus-visible,
-    .btn-table-download:focus-visible,
-    .nav-cta:focus-visible {
-      outline: 3px solid var(--red-apple);
-      outline-offset: 3px;
-      border-radius: var(--radius-btn);
-    }
-    /* Hamburger button */
-    .nav-hamburger:focus-visible {
-      outline: 3px solid var(--red-apple);
-      outline-offset: 4px;
-      border-radius: 6px;
-    }
-    /* Logo nav */
-    .nav-logo:focus-visible {
-      outline: 3px solid var(--white);
-      outline-offset: 4px;
-      border-radius: 8px;
-    }
-    nav.scrolled .nav-logo:focus-visible {
-      outline-color: var(--blue-deep);
     }
 
     /* ============================================================
@@ -185,7 +144,7 @@
       text-decoration: none;
       transition: color 0.2s;
     }
-    nav.scrolled .nav-links a { color: var(--text-dark); }  /* #1A1A2E su #FFF → contrasto ~16:1 ✓ WCAG AA */
+    nav.scrolled .nav-links a { color: var(--text-dark); /* Migliorato contrasto testo riposante */ }
     .nav-links a:hover { color: var(--white); }
     nav.scrolled .nav-links a:hover { color: var(--blue-deep); }
 
@@ -326,6 +285,7 @@
       line-height: 1.1;
       margin-bottom: 24px;
       animation: heroIn 1.2s 0.25s cubic-bezier(0.22,1,0.36,1) both;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.6); /* Contrasto testo visibile in ogni condizione */
     }
     .hero-title em {
       font-style: italic;
@@ -340,6 +300,7 @@
       margin: 0 auto 40px;
       line-height: 1.7;
       animation: heroIn 1.2s 0.35s cubic-bezier(0.22,1,0.36,1) both;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5); /* Contrasto per accessibilità */
     }
 
     .hero-actions {
@@ -919,12 +880,6 @@
       transition: color 0.2s;
     }
     .footer-col ul a:hover { color: var(--white); }
-    .footer-col ul a:focus-visible {
-      outline: 2px solid rgba(255,255,255,0.7);
-      outline-offset: 3px;
-      border-radius: 3px;
-      color: var(--white);
-    }
 
     .footer-bottom {
       border-top: 1px solid rgba(255,255,255,0.1);
@@ -997,17 +952,17 @@
       .footer-top { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; text-align: center; }
     }
+
+    /* Accessibilità animazioni (WCAG 2.3.3) */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
   </style>
 </head>
 <body>
 
-  <!--
-    SKIP LINK — Salta al contenuto principale
-    Visibile SOLO a chi naviga con la tastiera (al primo Tab).
-    Permette di bypassare la navbar ripetitiva ad ogni pagina.
-    WCAG 2.1 – Criterio 2.4.1 (Livello A)
-  -->
-  <a class="skip-link" href="#main-content">Salta al contenuto principale</a>
+  <!-- Skip link per l'accessibilità da tastiera -->
+  <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
 
   <!-- ============================================================
        NAVIGATION
@@ -1031,7 +986,7 @@
         <li><a href="#archivio">Archivio Report</a></li>
         <li>
           <a href="https://melinda.it/wp-content/uploads/2024/02/240227_Bilancio-Melinda-2023-web-doppie.pdf"
-             target="_blank" rel="noopener noreferrer"
+             target="_blank" rel="noopener noreferrer" download
              class="nav-cta"
              aria-label="Scarica l'Ultimo Report di Sostenibilità 2023 (PDF)">
             Scarica Report 2023
@@ -1047,14 +1002,13 @@
   </nav>
 
   <!-- ============================================================
+       MAIN CONTENT
+  ============================================================ -->
+  <main id="main-content" tabindex="-1">
+  
+  <!-- ============================================================
        HERO
   ============================================================ -->
-  <!--
-    id="main-content" → target del skip-link.
-    tabindex="-1" consente il focus programmatico dopo il salto
-    senza aggiungere l'elemento alla tab order naturale.
-  -->
-  <main id="main-content" tabindex="-1">
   <section id="hero" aria-label="Sezione hero principale">
     <div class="hero-bg" aria-hidden="true"></div>
 
@@ -1371,7 +1325,6 @@
       </div>
 
       <div class="reports-grid">
-        <!-- Report 2023 — ULTIMO, card in evidenza -->
         <article class="report-card latest reveal reveal-delay-1" aria-labelledby="rep2023-title">
           <div class="report-card-top" style="position:relative;">
             <span class="ribbon" aria-label="Documento più recente">Più recente</span>
@@ -1397,44 +1350,31 @@
               </span>
             </div>
             <a href="https://melinda.it/wp-content/uploads/2024/02/240227_Bilancio-Melinda-2023-web-doppie.pdf"
-               target="_blank" rel="noopener noreferrer"
+               target="_blank" rel="noopener noreferrer" download
                class="btn-download green"
-               download="Bilancio-Sostenibilita-Melinda-2023.pdf"
-               aria-label="Scarica il Bilancio di Sostenibilità Melinda 2023 in formato PDF (circa 10 megabyte, si apre in nuova scheda)">
-              <!--
-                NOTA TECNICA — attributo download su risorse cross-origin:
-                L'attributo `download` suggerisce al browser di scaricare
-                il file con il nome specificato anziché aprirlo. Per risorse
-                cross-origin (dominio esterno, es. melinda.it), il comportamento
-                dipende dall'header HTTP "Content-Disposition: attachment" inviato
-                dal server. Se l'header non è presente, il browser aprirà il file
-                in una nuova scheda. In un contesto di produzione, i PDF andrebbero
-                ospitati sullo stesso dominio della pagina per garantire il download
-                immediato. L'aria-label avverte l'utente di entrambe le possibilità.
-              -->
+               aria-label="Scarica il Bilancio di Sostenibilità Melinda 2023 in formato PDF">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
               Scarica 2023 (10 MB)
             </a>
           </div>
         </article>
 
-        <!-- Report 2020 -->
         <article class="report-card reveal reveal-delay-2" aria-labelledby="rep2020-title">
           <div class="report-card-top">
             <span class="report-year" aria-hidden="true">2020</span>
-            <span class="report-badge">Esercizio 2020 · Seconda Edizione APOT</span>
-            <h3 id="rep2020-title">Trentino Frutticolo Sostenibile — Bilancio 2020</h3>
+            <span class="report-badge">Esercizio 2020 · Progetto APOT</span>
+            <h3 id="rep2020-title">Bilancio di Sostenibilità 2020</h3>
           </div>
           <div class="report-card-body">
             <p class="report-desc">
-              Seconda edizione, pubblicata da APOT nel 2021. Espande i parametri d'indagine e
-              relaziona sull'adozione estensiva della lotta parassitaria tramite confusione
-              sessuale nei frutteti. Prima mappatura completa della biodiversità apistica nelle valli.
+              Edizione curata con il consorzio provinciale APOT. Espande i parametri d'indagine e relaziona 
+              sull'adozione estensiva della lotta parassitaria tramite confusione sessuale nei frutteti.
+              Prima mappatura completa della biodiversità.
             </p>
             <div class="report-meta">
               <span class="report-meta-item">
                 <svg fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-                PDF · APOT
+                ~7 MB · PDF
               </span>
               <span class="report-meta-item">
                 <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5C3.89 3 3 3.9 3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
@@ -1442,18 +1382,16 @@
               </span>
             </div>
             <a href="https://www.apot.it/wp-content/uploads/2021/06/Trentino_Frutticolo_Sostenibile_2020_(IT).pdf"
-               target="_blank" rel="noopener noreferrer"
-               download="Trentino-Frutticolo-Sostenibile-2020.pdf"
+               target="_blank" rel="noopener noreferrer" download
                class="btn-download"
-               aria-label="Scarica il Bilancio Trentino Frutticolo Sostenibile 2020 in PDF — pubblicato da APOT (si apre in nuova scheda)">
+               aria-label="Scarica il Bilancio di Sostenibilità 2020 in formato PDF">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
-              Scarica 2020 (APOT)
+              Scarica 2020 (7 MB)
             </a>
           </div>
         </article>
 
-        <!-- Report 2016 -->
-        <article class="report-card reveal reveal-delay-4" aria-labelledby="rep2016-title">
+        <article class="report-card reveal reveal-delay-3" aria-labelledby="rep2016-title">
           <div class="report-card-top">
             <span class="report-year" aria-hidden="true">2016</span>
             <span class="report-badge">2016 · Prima Edizione Fondativa</span>
@@ -1476,10 +1414,9 @@
               </span>
             </div>
             <a href="https://www.apot.it/wp-content/uploads/2023/05/Bilancio_Tfs_bozza_ok.pdf"
-               target="_blank" rel="noopener noreferrer"
+               target="_blank" rel="noopener noreferrer" download
                class="btn-download"
-               download="Trentino-Frutticolo-Sostenibile-2016.pdf"
-               aria-label="Scarica il Progetto Trentino Frutticolo Sostenibile edizione 2016 — circa 5 megabyte, PDF (si apre in nuova scheda)">
+               aria-label="Scarica il Progetto Trentino Frutticolo Sostenibile edizione 2016 in formato PDF">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
               Scarica 2016 (5 MB)
             </a>
@@ -1524,10 +1461,9 @@
               <td>~10 MB</td>
               <td>
                 <a href="https://melinda.it/wp-content/uploads/2024/02/240227_Bilancio-Melinda-2023-web-doppie.pdf"
-                   target="_blank" rel="noopener noreferrer"
+                   target="_blank" rel="noopener noreferrer" download
                    class="btn-table-download green"
-                   download="Bilancio-Sostenibilita-Melinda-2023.pdf"
-                   aria-label="Scarica il Bilancio di Sostenibilità Melinda 2023 in PDF (circa 10 MB)">
+                   aria-label="Scarica il Bilancio di Sostenibilità 2023 in formato PDF">
                   <svg width="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
                   Scarica 2023
                 </a>
@@ -1535,16 +1471,15 @@
             </tr>
             <tr>
               <td>2020</td>
-              <td>Trentino Frutticolo Sostenibile — Bilancio 2020</td>
-              <td>Espansione parametri. Confusione sessuale integrata. Mappa apicoltori. Pub. APOT</td>
-              <td>GRI (APOT)</td>
-              <td>PDF</td>
+              <td>Progetto "Trentino Frutticolo Sostenibile" 2020</td>
+              <td>Espansione parametri. Confusione sessuale integrata. Mappa apicoltori</td>
+              <td>GRI Standards</td>
+              <td>~7 MB</td>
               <td>
                 <a href="https://www.apot.it/wp-content/uploads/2021/06/Trentino_Frutticolo_Sostenibile_2020_(IT).pdf"
-                   target="_blank" rel="noopener noreferrer"
-                   download="Trentino-Frutticolo-Sostenibile-2020.pdf"
+                   target="_blank" rel="noopener noreferrer" download
                    class="btn-table-download"
-                   aria-label="Scarica il Bilancio Trentino Frutticolo Sostenibile 2020 in PDF — pubblicato da APOT">
+                   aria-label="Scarica il Bilancio di Sostenibilità 2020 in formato PDF">
                   <svg width="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
                   Scarica 2020
                 </a>
@@ -1558,10 +1493,9 @@
               <td>~5 MB</td>
               <td>
                 <a href="https://www.apot.it/wp-content/uploads/2023/05/Bilancio_Tfs_bozza_ok.pdf"
-                   target="_blank" rel="noopener noreferrer"
+                   target="_blank" rel="noopener noreferrer" download
                    class="btn-table-download"
-                   download="Trentino-Frutticolo-Sostenibile-2016.pdf"
-                   aria-label="Scarica il Progetto Trentino Frutticolo Sostenibile 2016 in PDF — circa 5 MB (APOT, si apre in nuova scheda)">
+                   aria-label="Scarica il documento fondativo 2016 in formato PDF">
                   <svg width="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
                   Scarica 2016
                 </a>
@@ -1573,11 +1507,10 @@
     </div>
   </section>
 
-  </main><!-- /main#main-content -->
-
   <!-- ============================================================
        FOOTER
   ============================================================ -->
+  </main>
   <footer role="contentinfo">
     <div class="footer-inner">
       <div class="footer-top">
@@ -1610,9 +1543,10 @@
         <div class="footer-col">
           <h4>Report</h4>
           <ul>
-            <li><a href="https://melinda.it/wp-content/uploads/2024/02/240227_Bilancio-Melinda-2023-web-doppie.pdf" target="_blank" rel="noopener noreferrer">Bilancio Melinda 2023</a></li>
-            <li><a href="https://www.apot.it/wp-content/uploads/2021/06/Trentino_Frutticolo_Sostenibile_2020_(IT).pdf" target="_blank" rel="noopener noreferrer">Bilancio APOT 2020</a></li>
-            <li><a href="https://www.apot.it/wp-content/uploads/2023/05/Bilancio_Tfs_bozza_ok.pdf" target="_blank" rel="noopener noreferrer">Report APOT 2016</a></li>
+            <li><a href="https://melinda.it/wp-content/uploads/2024/02/240227_Bilancio-Melinda-2023-web-doppie.pdf" target="_blank" rel="noopener noreferrer">Bilancio 2023</a></li>
+            <li><a href="https://melinda.it/sostenibilita/" target="_blank" rel="noopener noreferrer">Bilancio 2022</a></li>
+            <li><a href="https://melinda.it/sostenibilita/" target="_blank" rel="noopener noreferrer">Bilancio 2020</a></li>
+            <li><a href="https://www.apot.it/wp-content/uploads/2023/05/Bilancio_Tfs_bozza_ok.pdf" target="_blank" rel="noopener noreferrer">Report 2016</a></li>
           </ul>
         </div>
 
@@ -1620,7 +1554,7 @@
           <h4>Contatti</h4>
           <ul>
             <li><a href="https://melinda.it" target="_blank" rel="noopener noreferrer">melinda.it</a></li>
-            <li><a href="/cdn-cgi/l/email-protection#026f676e6b6c6663427267612c6b76"><span class="__cf_email__" data-cfemail="a3cec6cfcacdc7c2e3d3c6c08dcad7">[email&#160;protected]</span></a></li>
+            <li><a href="mailto:melinda@pec.it">melinda@pec.it</a></li>
             <li><a href="tel:+390463469299">0463 469299</a></li>
             <li><a href="https://melinda.it/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
           </ul>
@@ -1645,7 +1579,7 @@
        JAVASCRIPT
        Commenti: spiegazione di ogni funzione per il rapporto
   ============================================================ -->
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     /* ---------------------------------------------------------------
      * 1. NAVBAR SCROLL BEHAVIOUR
      *    Aggiunge la classe .scrolled alla nav appena l'utente supera
@@ -1745,3 +1679,13 @@
       Object.assign(p.style, {
         width:           size + 'px',
         height:          size + 'px',
+        left:            left + '%',
+        bottom:          bottom + '%',
+        animationDuration:  dur + 's',
+        animationDelay:     delay + 's',
+      });
+      particlesContainer.appendChild(p);
+    }
+  </script>
+</body>
+</html>
