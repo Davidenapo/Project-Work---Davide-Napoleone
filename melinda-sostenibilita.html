@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Melinda Sostenibilità — Report ESG &amp; Bilanci di Sostenibilità</title>
+  <meta name="description" content="Scopri l'impegno del Consorzio Melinda per la sostenibilità ambientale, sociale e di governance. Scarica i Bilanci di Sostenibilità ufficiali." />
+
+  <!-- Google Fonts: Playfair Display (titoli eleganti) + DM Sans (corpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       RESET & DESIGN TOKENS
+       Palette brand Melinda: Blu istituzionale, Verde eco, Rosso mela
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Focus visibile per accessibilità da tastiera */
+    *:focus-visible {
+      outline: 3px solid var(--blue-mid);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* Skip-link (Accessibilità) */
+    .skip-link {
+      position: fixed;
+      top: -100px;
+      left: 0;
+      background: var(--red-apple);
+      color: var(--white);
+      padding: 12px 24px;
+      z-index: 2000;
+      font-weight: 700;
+      text-decoration: none;
+      transition: top 0.3s;
+    }
+    .skip-link:focus {
+      top: 0;
+      outline: none; /* override del focus globale per non raddoppiare */
+      box-shadow: 0 0 0 3px var(--blue-deep);
+    }
+
+    :root {
+      --blue-deep:   #003B73;
+      --blue-mid:    #0C4A8C;
+      --blue-light:  #E8F0FA;
+      --green-eco:   #007A33;
+      --green-light: #E6F4ED;
+      --red-apple:   #D42B2B;
+      --cream:       #F7F3EE;
+      --white:       #FFFFFF;
+      --text-dark:   #1A1A2E;
+      --text-mid:    #4A4A68;
+      --text-light:  #7A7A9A;
+      --border:      #E0DDD8;
+      --shadow-card: 0 4px 24px rgba(0,59,115,0.10);
+      --shadow-hover:0 12px 40px rgba(0,59,115,0.18);
+      --radius-card: 16px;
+      --radius-btn:  50px;
+      --font-head:   'Playfair Display', Georgia, serif;
+      --font-body:   'DM Sans', system-ui, sans-serif;
+      --max-w:       1180px;
+      --nav-h:       72px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-dark);
+      background: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      padding: 0 clamp(20px, 4vw, 48px);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    nav.scrolled {
+      background: var(--white);
+      box-shadow: 0 2px 20px rgba(0,59,115,0.10);
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    /* SVG logo placeholder stylizzato */
+    .logo-mark {
+      width: 44px; height: 44px;
+      background: var(--blue-deep);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-mark svg { width: 24px; height: 24px; }
+    .logo-text {
+      font-family: var(--font-head);
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      transition: color 0.3s;
+    }
+    nav.scrolled .logo-text { color: var(--blue-deep); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav.scrolled .nav-links a { color: var(--text-dark); /* Migliorato contrasto testo riposante */ }
+    .nav-links a:hover { color: var(--white); }
+    nav.scrolled .nav-links a:hover { color: var(--blue-deep); }
+
+    .nav-cta {
+      background: var(--red-apple);
+      color: var(--white) !important;
+      padding: 10px 22px;
+      border-radius: var(--radius-btn);
+      font-weight: 600 !important;
+      transition: background 0.2s, transform 0.2s !important;
+    }
+    .nav-cta:hover { background: #b82222 !important; transform: translateY(-1px); }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+    nav.scrolled .nav-hamburger span { background: var(--blue-deep); }
+
+    /* ============================================================
+       HERO SECTION
+    ============================================================ */
+    #hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Sfondo hero: gradiente paesaggio alpino + texture grain */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          160deg,
+          #0a2144 0%,
+          #0d3d6e 28%,
+          #1a5c3a 65%,
+          #0d3d1e 100%
+        );
+    }
+    /* Strati decorativi montagna stilizzata */
+    .hero-mountains {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 55%;
+      opacity: 0.18;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,20,50,0.25) 0%,
+        rgba(0,20,50,0.55) 60%,
+        rgba(0,10,25,0.75) 100%
+      );
+    }
+    /* Particelle fluttuanti decorative */
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-80vh) translateX(30px) scale(0.5); opacity: 0; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 clamp(20px, 5vw, 60px);
+      max-width: 860px;
+      animation: heroIn 1.2s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      backdrop-filter: blur(8px);
+      color: rgba(255,255,255,0.95);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      animation: heroIn 1.2s 0.15s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: #5DDFB0;
+      border-radius: 50%;
+      animation: pulse-green 2s infinite;
+    }
+    @keyframes pulse-green {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(1.5); }
+    }
+
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 5.5vw, 5rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 24px;
+      animation: heroIn 1.2s 0.25s cubic-bezier(0.22,1,0.36,1) both;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.6); /* Contrasto testo visibile in ogni condizione */
+    }
+    .hero-title em {
+      font-style: italic;
+      color: #A8D8B2;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 300;
+      color: rgba(255,255,255,0.82);
+      max-width: 620px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+      animation: heroIn 1.2s 0.35s cubic-bezier(0.22,1,0.36,1) both;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5); /* Contrasto per accessibilità */
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: heroIn 1.2s 0.45s cubic-bezier(0.22,1,0.36,1) both;
+    }
+
+    .btn-primary {
+      background: var(--red-apple);
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(212,43,43,0.35);
+    }
+    .btn-primary:hover {
+      background: #b82222;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(212,43,43,0.45);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.12);
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: var(--radius-btn);
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(6px);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.22);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: bounce 2.5s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+    .hero-scroll-hint svg { width: 20px; opacity: 0.6; }
+
+    /* ============================================================
+       SECTION WRAPPER
+    ============================================================ */
+    section { padding: clamp(60px, 8vw, 120px) clamp(20px, 4vw, 48px); }
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green-eco);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.9rem);
+      font-weight: 700;
+      color: var(--blue-deep);
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      max-width: 600px;
+      line-height: 1.8;
+    }
+
+    /* ============================================================
+       CHI È MELINDA — COUNTERS
+    ============================================================ */
+    #chi-siamo { background: var(--cream); }
+
+    .chi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-top: 50px;
+    }
+    .chi-text p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--text-mid);
+      margin-bottom: 16px;
+    }
+    .chi-text p:last-child { margin-bottom: 0; }
+
+    .counters-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .counter-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: 28px 24px;
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .counter-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue-mid), var(--green-eco));
+    }
+    .counter-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    .counter-number {
+      font-family: var(--font-head);
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--blue-deep);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .counter-unit {
+      font-size: 1.4rem;
+      color: var(--green-eco);
+    }
+    .counter-label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      line-height: 1.4;
+    }
+
+    /* ============================================================
+       MANIFESTO ESG — 3 CARD
+    ============================================================ */
+    #manifesto { background: var(--white); }
+
+    .manifesto-header { text-align: center; margin-bottom: 60px; }
+    .manifesto-header .section-subtitle { margin: 0 auto; }
+
+    .esg-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .esg-card {
+      border-radius: var(--radius-card);
+      padding: 40px 32px;
+      border: 1.5px solid var(--border);
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .esg-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 0;
+      background: linear-gradient(to top, rgba(0,59,115,0.04), transparent);
+      transition: height 0.4s;
+    }
+    .esg-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+    .esg-card:hover::after { height: 100%; }
+
+    .esg-card.env { border-top: 4px solid var(--green-eco); }
+    .esg-card.soc { border-top: 4px solid var(--blue-mid); }
+    .esg-card.gov { border-top: 4px solid var(--red-apple); }
+
+    .esg-icon {
+      width: 60px; height: 60px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      font-size: 1.6rem;
+    }
+    .env .esg-icon { background: var(--green-light); }
+    .soc .esg-icon { background: var(--blue-light); }
+    .gov .esg-icon { background: #FFF0F0; }
+
+    .esg-title {
+      font-family: var(--font-head);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--blue-deep);
+      margin-bottom: 12px;
+    }
+    .esg-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+    }
+    .env .esg-tag  { background: var(--green-light); color: var(--green-eco); }
+    .soc .esg-tag  { background: var(--blue-light);  color: var(--blue-mid); }
+    .gov .esg-tag  { background: #FFF0F0;            color: var(--red-apple); }
+
+    .esg-body {
+      font-size: 0.92rem;
+      line-height: 1.82;
+      color: var(--text-mid);
+      margin-bottom: 28px;
+    }
+
+    .esg-kpis {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .kpi-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.84rem;
+      color: var(--text-dark);
+    }
+    .kpi-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .env .kpi-dot { background: var(--green-eco); }
+    .soc .kpi-dot { background: var(--blue-mid); }
+    .gov .kpi-dot { background: var(--red-apple); }
+
+    /* ============================================================
+       TIMELINE STORICA (decorativa)
+    ============================================================ */
+    #timeline {
+      background: var(--blue-deep);
+      color: var(--white);
+      padding: clamp(60px,8vw,100px) clamp(20px,4vw,48px);
+    }
+    #timeline .section-label { color: #A8D8B2; }
+    #timeline .section-title { color: var(--white); }
+
+    .timeline-track {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 60px;
+      padding-top: 20px;
+    }
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      top: 28px; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.35), rgba(255,255,255,0.1));
+    }
+    .tl-item {
+      flex: 1;
+      text-align: center;
+      padding: 0 12px;
+      position: relative;
+    }
+    .tl-dot {
+      width: 16px; height: 16px;
+      background: #A8D8B2;
+      border-radius: 50%;
+      border: 3px solid var(--blue-deep);
+      margin: 0 auto 16px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 0 4px rgba(168,216,178,0.25);
+    }
+    .tl-year {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #A8D8B2;
+      margin-bottom: 8px;
+    }
+    .tl-label {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       ARCHIVIO REPORT — Download
+    ============================================================ */
+    #archivio { background: var(--cream); }
+
+    .archivio-header { text-align: center; margin-bottom: 50px; }
+    .archivio-header .section-subtitle { margin: 0 auto; }
+
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .report-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .report-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .report-card-top {
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue-mid));
+      padding: 32px 28px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .report-card-top::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; right: -30px;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+    .report-year {
+      font-family: var(--font-head);
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.15);
+      position: absolute;
+      top: 10px; right: 18px;
+      line-height: 1;
+    }
+    .report-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.85);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 10px;
+    }
+    .report-card-top h3 {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.3;
+    }
+
+    .report-card-body {
+      padding: 22px 28px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .report-desc {
+      font-size: 0.87rem;
+      line-height: 1.75;
+      color: var(--text-mid);
+      flex: 1;
+      margin-bottom: 20px;
+    }
+    .report-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .report-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--text-light);
+    }
+    .report-meta-item svg { width: 14px; }
+
+    .btn-download {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: var(--blue-deep);
+      color: var(--white);
+      padding: 13px 20px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-download:hover {
+      background: var(--blue-mid);
+      transform: translateY(-1px);
+    }
+    .btn-download svg { width: 16px; }
+
+    .report-card.latest .report-card-top {
+      background: linear-gradient(135deg, #0d4420, var(--green-eco));
+    }
+    .report-card.latest .btn-download {
+      background: var(--green-eco);
+    }
+    .report-card.latest .btn-download:hover { background: #006229; }
+
+    /* "Ultimo Report" ribbon */
+    .ribbon {
+      position: absolute;
+      top: 14px; left: -8px;
+      background: var(--red-apple);
+      color: var(--white);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 14px 4px 18px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+      clip-path: polygon(8px 0%, 100% 0%, 100% 100%, 8px 100%, 0% 50%);
+    }
+
+    /* ============================================================
+       NOTE TECNICHE / TABELLA ACCESSIBILE
+    ============================================================ */
+    #tabella { background: var(--white); padding: clamp(50px,7vw,90px) clamp(20px,4vw,48px); }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: var(--radius-card);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-card);
+      margin-top: 40px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    thead {
+      background: var(--blue-deep);
+      color: var(--white);
+    }
+    th {
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    th:first-child { border-radius: 0; }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--blue-light); }
+    td {
+      padding: 16px 20px;
+      color: var(--text-mid);
+      line-height: 1.55;
+      vertical-align: middle;
+    }
+    td:first-child {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--blue-deep);
+    }
+    td strong { color: var(--text-dark); font-weight: 600; }
+    .btn-table-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--blue-deep);
+      color: var(--white);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .btn-table-download:hover { background: var(--blue-mid); }
+    .btn-table-download.green { background: var(--green-eco); }
+    .btn-table-download.green:hover { background: #006229; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: #0a1628;
+      color: rgba(255,255,255,0.65);
+      padding: clamp(50px,7vw,80px) clamp(20px,4vw,48px) 32px;
+    }
+    .footer-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand .logo-text { color: var(--white); font-size: 1.2rem; }
+    .footer-brand p {
+      font-size: 0.85rem;
+      line-height: 1.8;
+      margin-top: 16px;
+      max-width: 260px;
+    }
+    .footer-col h4 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 18px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul a {
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover { color: var(--white); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p { font-size: 0.8rem; }
+    .footer-gri {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .gri-badge {
+      background: rgba(0,122,51,0.25);
+      border: 1px solid rgba(0,122,51,0.45);
+      color: #6ddc9e;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    /* ============================================================
+       SCROLL REVEAL
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      .chi-grid { grid-template-columns: 1fr; gap: 40px; }
+      .esg-grid  { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .timeline-track { flex-direction: column; gap: 30px; }
+      .timeline-track::before { display: none; }
+    }
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: var(--nav-h); left: 0; right: 0;
+        background: var(--blue-deep);
+        padding: 24px 32px;
+        gap: 20px;
+        align-items: flex-start;
+      }
+      .counters-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    /* Accessibilità animazioni (WCAG 2.3.3) */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip link per l'accessibilità da tastiera -->
+  <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav id="main-nav" aria-label="Navigazione principale">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo" aria-label="Torna all'inizio">
+        <!-- Logo Melinda stilizzato: ovale blu con "M" -->
+        <div class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C8 2 5 5 5 9c0 5 4.5 11 7 13 2.5-2 7-8 7-13 0-4-3-7-7-7z" fill="white" opacity="0.9"/>
+            <circle cx="12" cy="9" r="3" fill="#003B73"/>
+          </svg>
+        </div>
+        <span class="logo-text">Melinda</span>
+      </a>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#chi-siamo">L'Azienda</a></li>
+        <li><a href="#manifesto">I Tre Pilastri ESG</a></li>
+        <li><a href="#archivio">Archivio Report</a></li>
+        <li>
+          <a href="https://melinda.it/wp-content/uploads/2024/02/240227_Bilancio-Melinda-2023-web-doppie.pdf"
+             target="_blank" rel="noopener noreferrer" download
+             class="nav-cta"
+             aria-label="Scarica l'Ultimo Report di Sostenibilità 2023 (PDF)">
+            Scarica Report 2023
+          </a>
+        </li>
+      </ul>
+
+      <button class="nav-hamburger" id="hamburger"
+              aria-label="Apri o chiudi il menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       MAIN CONTENT
+  ============================================================ -->
+  <main id="main-content" tabindex="-1">
+  
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section id="hero" aria-label="Sezione hero principale">
+    <div class="hero-bg" aria-hidden="true"></div>
+
+    <!-- Montagne stilizzate SVG -->
+    <svg class="hero-mountains" aria-hidden="true" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax slice">
+      <polygon points="0,400 200,120 400,300 600,80 800,220 1000,50 1200,180 1440,100 1440,400" fill="white"/>
+      <polygon points="0,400 250,200 500,320 700,150 900,280 1150,100 1300,230 1440,160 1440,400" fill="white" opacity="0.4"/>
+    </svg>
+
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <!-- Particelle animate -->
+    <div class="hero-particles" aria-hidden="true" id="particles"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Sostenibilità Certificata GRI · Dal 1989
+      </div>
+      <h1 class="hero-title">
+        Coltiviamo il Futuro,<br>
+        <em>Rispettando il Territorio.</em>
+      </h1>
+      <p class="hero-subtitle">
+        Oltre il raccolto, c'è la cura. Scopri come il Consorzio Melinda valorizza il lavoro
+        di 4.000 famiglie, difende la biodiversità alpina e costruisce un domani sostenibile
+        in ogni mela.
+      </p>
+      <div class="hero-actions">
+        <a href="#archivio" class="btn-primary" aria-label="Vai all'archivio dei report scaricabili">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z" fill="currentColor"/>
+          </svg>
+          Scarica i Report
+        </a>
+        <a href="#manifesto" class="btn-secondary" aria-label="Esplora il nostro manifesto ESG">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4l1.5 4.5H18l-3.75 2.72 1.5 4.5L12 13.27l-3.75 2.45 1.5-4.5L6 8.5h4.5L12 4z" fill="currentColor"/>
+          </svg>
+          Esplora il Manifesto
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint" aria-hidden="true">
+      Scorri
+      <svg viewBox="0 0 24 24" fill="white"><path d="M7 10l5 5 5-5z"/></svg>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHI È MELINDA
+  ============================================================ -->
+  <section id="chi-siamo" aria-labelledby="chi-siamo-title">
+    <div class="container">
+      <span class="section-label reveal">Il Consorzio</span>
+      <h2 class="section-title reveal reveal-delay-1" id="chi-siamo-title">
+        Una Valle. Una Famiglia.<br>Un Consorzio.
+      </h2>
+
+      <div class="chi-grid">
+        <div class="chi-text reveal reveal-delay-2">
+          <p>
+            Nati nel 1989 dall'unione degli agricoltori delle valli del Noce, il Consorzio Melinda
+            non è una multinazionale, ma una straordinaria alleanza di <strong>16 cooperative</strong>
+            radicate nel cuore delle Dolomiti trentine. La nostra missione trascende il profitto:
+            preservare l'economia di montagna, frenare lo spopolamento e garantire che ogni mela
+            prodotta porti con sé un patto di qualità e rispetto verso la terra.
+          </p>
+          <p>
+            Nel 2003, l'Unione Europea ha riconosciuto il primato delle nostre mele con la
+            certificazione <strong>DOP</strong> (Denominazione di Origine Protetta), la prima mela
+            italiana a ricevere questo sigillo. Oggi, con un fatturato che ha superato i
+            <strong>350 milioni di euro</strong> nel 2023/2024, continuiamo a crescere senza mai
+            dimenticare le radici.
+          </p>
+          <p>
+            Il claim istituzionale — <em>"Dove le parole sono fatti"</em> — riflette il nostro
+            approccio pragmatico: ogni impegno ambientale e sociale deve essere misurabile,
+            certificato e rendicontato secondo gli standard GRI.
+          </p>
+        </div>
+
+        <!-- Contatori animati -->
+        <div class="counters-grid" aria-label="Dati chiave Consorzio Melinda">
+          <div class="counter-card reveal reveal-delay-1">
+            <div class="counter-number" data-target="4000" data-suffix="">
+              0
+            </div>
+            <div class="counter-unit">+</div>
+            <div class="counter-label">Famiglie di Frutticoltori Soci</div>
+          </div>
+          <div class="counter-card reveal reveal-delay-2">
+            <div class="counter-number" data-target="100" data-suffix="">
+              0
+            </div>
+            <div class="counter-unit">%</div>
+            <div class="counter-label">Mele di Origine Trentina (DOP e Club)</div>
+          </div>
+          <div class="counter-card reveal reveal-delay-3">
+            <div class="counter-number" data-target="14000" data-suffix="">
+              0
+            </div>
+            <div class="counter-unit">+</div>
+            <div class="counter-label">Persone sostenute dall'indotto locale</div>
+          </div>
+          <div class="counter-card reveal reveal-delay-4">
+            <div class="counter-number" data-target="1500" data-suffix="">
+              0
+            </div>
+            <div class="counter-unit">+</div>
+            <div class="counter-label">Dipendenti diretti nelle lavorazioni</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TIMELINE STORICA
+  ============================================================ -->
+  <section id="timeline" aria-labelledby="timeline-title">
+    <div class="container">
+      <span class="section-label reveal">Percorso di Rendicontazione</span>
+      <h2 class="section-title reveal reveal-delay-1" id="timeline-title">
+        Dalla fondazione alla sostenibilità certificata
+      </h2>
+      <div class="timeline-track" role="list">
+        <div class="tl-item reveal reveal-delay-1" role="listitem">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-year">1989</div>
+          <div class="tl-label">Fondazione del Consorzio Melinda. Unificazione di 16 cooperative</div>
+        </div>
+        <div class="tl-item reveal reveal-delay-2" role="listitem">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-year">2003</div>
+          <div class="tl-label">Ottenimento certificazione DOP per Golden, Red Delicious e Renetta Canada</div>
+        </div>
+        <div class="tl-item reveal reveal-delay-2" role="listitem">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-year">2015</div>
+          <div class="tl-label">Adozione del Codice Etico formale. Attivazione Organismo di Vigilanza</div>
+        </div>
+        <div class="tl-item reveal reveal-delay-3" role="listitem">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-year">2016</div>
+          <div class="tl-label">Primo Bilancio di Sostenibilità. Progetto Trentino Frutticolo Sostenibile</div>
+        </div>
+        <div class="tl-item reveal reveal-delay-3" role="listitem">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-year">2020</div>
+          <div class="tl-label">Espansione confusione sessuale. Avanzamento Piano Bio. Secondo Bilancio</div>
+        </div>
+        <div class="tl-item reveal reveal-delay-4" role="listitem">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-year">2022</div>
+          <div class="tl-label">100% energia rinnovabile raggiunta. Inaugurazione Celle Ipogee. Terzo Bilancio</div>
+        </div>
+        <div class="tl-item reveal reveal-delay-4" role="listitem">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-year">2023</div>
+          <div class="tl-label">Bilancio GRI completo. 350M€ di fatturato. Piano Bio verso 500 ettari</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MANIFESTO ESG
+  ============================================================ -->
+  <section id="manifesto" aria-labelledby="manifesto-title">
+    <div class="container">
+      <div class="manifesto-header">
+        <span class="section-label reveal">Il Manifesto ESG</span>
+        <h2 class="section-title reveal reveal-delay-1" id="manifesto-title">
+          Dove le parole sono fatti.
+        </h2>
+        <p class="section-subtitle reveal reveal-delay-2">
+          La Sostenibilità in Melinda non è una formula di marketing. È misurabile, certificata
+          e rendicontata secondo i più severi standard GRI europei. Ecco come trasformiamo i nostri
+          principi in azioni quotidiane.
+        </p>
+      </div>
+
+      <div class="esg-grid">
+        <!-- Card 1: Environment -->
+        <article class="esg-card env reveal reveal-delay-1" aria-labelledby="env-title">
+          <div class="esg-icon" aria-hidden="true">🌿</div>
+          <span class="esg-tag">Environment · Ambiente</span>
+          <h3 class="esg-title" id="env-title">Impatto Ambientale</h3>
+          <p class="esg-body">
+            Sfruttiamo il <strong>100% di energia elettrica rinnovabile</strong> (idroelettrico
+            certificato all'89% + solare fotovoltaico). Innoviamo con le esclusive <strong>Celle
+            Ipogee</strong>, un frigorifero geologico scavato a 300 metri nella roccia Dolomia che
+            fa risparmiare <strong>1,9 GW/h l'anno</strong>. Salvaguardiamo la nostra acqua con
+            microirrigazione a goccia (−30,6% di consumi) e proteggiamo l'ecosistema installando
+            nei campi oltre <strong>23.886 arnie per le api</strong> impollinatrici.
+          </p>
+          <ul class="esg-kpis" aria-label="Indicatori chiave ambientali">
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              100% energia da fonti rinnovabili (Scope 2 azzerato)
+            </li>
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              −30,6% consumo idrico con irrigazione a goccia (97% superfici)
+            </li>
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              1,9 GW/h risparmio annuo grazie alle Celle Ipogee
+            </li>
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              23.886 arnie monitorate — indice sanitario dell'ecosistema
+            </li>
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              Packaging 100% compostabile (bioplastica Mater-Bi®) per linea Bio
+            </li>
+          </ul>
+        </article>
+
+        <!-- Card 2: Social -->
+        <article class="esg-card soc reveal reveal-delay-2" aria-labelledby="soc-title">
+          <div class="esg-icon" aria-hidden="true">👥</div>
+          <span class="esg-tag">Social · Società</span>
+          <h3 class="esg-title" id="soc-title">Responsabilità Sociale</h3>
+          <p class="esg-body">
+            La cooperazione è redistribuzione. Garantiamo l'equa retribuzione a chi lavora la
+            terra: oltre <strong>200 milioni di euro liquidati</strong> ai soci nell'annata 2023/24.
+            Tuteliamo l'occupazione locale investendo nella parità: il <strong>75% del personale</strong>
+            nei nostri reparti di selezione è composto da donne. Reinvestiamo attivamente
+            supportando progetti filantropici — San Patrignano, emergenze nazionali (#Dedicamela)
+            e manifestazioni sostenibili come la Marcialonga.
+          </p>
+          <ul class="esg-kpis" aria-label="Indicatori chiave sociali">
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              200M€ + liquidati alle famiglie socie nel 2023/24
+            </li>
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              75% forza lavoro femminile nelle lavorazioni
+            </li>
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              14.000 persone sostenute dall'indotto economico
+            </li>
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              Formazione continua e audit sicurezza — indice infortuni in calo
+            </li>
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              Programma Next Generation Melinda per giovani talenti
+            </li>
+          </ul>
+        </article>
+
+        <!-- Card 3: Governance -->
+        <article class="esg-card gov reveal reveal-delay-3" aria-labelledby="gov-title">
+          <div class="esg-icon" aria-hidden="true">🛡️</div>
+          <span class="esg-tag">Governance · Etica</span>
+          <h3 class="esg-title" id="gov-title">Etica d'Impresa</h3>
+          <p class="esg-body">
+            La democrazia cooperativa impone tolleranza zero verso le condotte illecite. Operiamo
+            sotto il controllo rigoroso di un <strong>Codice Etico istituito nel 2015</strong>,
+            supportato dalle ispezioni costanti di un Organismo di Vigilanza autonomo e di revisori
+            esterni certificati. La governance è strutturata con <strong>16 presidenti di
+            cooperativa</strong> nel CdA — uno per ogni territorio, a garanzia di rappresentanza
+            democratica totale.
+          </p>
+          <ul class="esg-kpis" aria-label="Indicatori chiave di governance">
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              Codice Etico operativo dal 2015, aggiornato periodicamente
+            </li>
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              Organismo di Vigilanza indipendente (D.Lgs. 231/2001)
+            </li>
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              CdA: 16 presidenti eletti democraticamente
+            </li>
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              Certificazioni GlobalGAP, IFS, CSQA e DOP attive
+            </li>
+            <li class="kpi-item">
+              <span class="kpi-dot" aria-hidden="true"></span>
+              Rendicontazione conforme GRI Standards dal 2016
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ARCHIVIO REPORT — CARDS
+  ============================================================ -->
+  <section id="archivio" aria-labelledby="archivio-title">
+    <div class="container">
+      <div class="archivio-header">
+        <span class="section-label reveal">Report &amp; Documenti</span>
+        <h2 class="section-title reveal reveal-delay-1" id="archivio-title">
+          Trasparenza Certificata:<br>I Nostri Bilanci ESG.
+        </h2>
+        <p class="section-subtitle reveal reveal-delay-2">
+          Esplora nel dettaglio la metodologia, l'analisi di materialità e i KPI.
+          Scarica le edizioni storiche e aggiornate della rendicontazione extra-finanziaria Melinda.
+        </p>
+      </div>
+
+      <div class="reports-grid">
+        <!-- Report 2023 — ULTIMO, card in evidenza -->
+        <article class="report-card latest reveal reveal-delay-1" aria-labelledby="rep2023-title">
+          <div class="report-card-top" style="position:relative;">
+            <span class="ribbon" aria-label="Documento più recente">Più recente</span>
+            <span class="report-year" aria-hidden="true">2023</span>
+            <span class="report-badge">Esercizio 2023 · GRI Standards</span>
+            <h3 id="rep2023-title">Bilancio di Sostenibilità Melinda 2023</h3>
+          </div>
+          <div class="report-card-body">
+            <p class="report-desc">
+              Documento di rendicontazione aggiornato. Riporta gli indicatori GRI completi,
+              il focus sulle nuove Celle Ipogee, l'avanzamento del Piano Biologico verso
+              i 500 ettari e gli obiettivi strategici per il futuro. Prima rendicontazione
+              integrata con CSRD.
+            </p>
+            <div class="report-meta">
+              <span class="report-meta-item" aria-label="Dimensione del file: circa 10 megabyte">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                ~10 MB · PDF
+              </span>
+              <span class="report-meta-item" aria-label="Anno di pubblicazione: 2024">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5C3.89 3 3 3.9 3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                Pubblicato: 2024
+              </span>
+            </div>
+            <a href="https://melinda.it/wp-content/uploads/2024/02/240227_Bilancio-Melinda-2023-web-doppie.pdf"
+               target="_blank" rel="noopener noreferrer" download
+               class="btn-download green"
+               aria-label="Scarica il Bilancio di Sostenibilità Melinda 2023 in formato PDF (circa 10 megabyte)">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
+              Scarica 2023 (10 MB)
+            </a>
+          </div>
+        </article>
+
+        <!-- Report 2022 -->
+        <article class="report-card reveal reveal-delay-2" aria-labelledby="rep2022-title">
+          <div class="report-card-top">
+            <span class="report-year" aria-hidden="true">2022</span>
+            <span class="report-badge">Esercizio 2022 · Terza Edizione</span>
+            <h3 id="rep2022-title">Bilancio di Sostenibilità Melinda 2022</h3>
+          </div>
+          <div class="report-card-body">
+            <p class="report-desc">
+              Terza edizione ufficiale. Sintesi post-pandemica che formalizza gli obiettivi
+              raggiunti sulla transizione verso l'energia al 100% rinnovabile. Include la prima
+              rendicontazione delle Celle Ipogee e l'avanzamento del Piano Bio.
+            </p>
+            <div class="report-meta">
+              <span class="report-meta-item">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                ~8 MB · PDF
+              </span>
+              <span class="report-meta-item">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5C3.89 3 3 3.9 3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                Pubblicato: 2023
+              </span>
+            </div>
+            <a href="https://melinda.it/sostenibilita/"
+               target="_blank" rel="noopener noreferrer" download
+               class="btn-download"
+               aria-label="Scarica il Bilancio di Sostenibilità Melinda 2022 in formato PDF (circa 8 megabyte)">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
+              Scarica 2022 (8 MB)
+            </a>
+          </div>
+        </article>
+
+        <!-- Report 2020 -->
+        <article class="report-card reveal reveal-delay-3" aria-labelledby="rep2020-title">
+          <div class="report-card-top">
+            <span class="report-year" aria-hidden="true">2020</span>
+            <span class="report-badge">Esercizio 2020 · Seconda Edizione</span>
+            <h3 id="rep2020-title">Bilancio di Sostenibilità Melinda 2020</h3>
+          </div>
+          <div class="report-card-body">
+            <p class="report-desc">
+              Seconda edizione. Espande i parametri d'indagine e relaziona sull'adozione
+              estensiva della lotta parassitaria tramite confusione sessuale nei frutteti.
+              Prima mappatura completa della biodiversità apistica nelle valli.
+            </p>
+            <div class="report-meta">
+              <span class="report-meta-item">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                ~7 MB · PDF
+              </span>
+              <span class="report-meta-item">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5C3.89 3 3 3.9 3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                Pubblicato: 2021
+              </span>
+            </div>
+            <a href="https://melinda.it/sostenibilita/"
+               target="_blank" rel="noopener noreferrer" download
+               class="btn-download"
+               aria-label="Scarica il Bilancio di Sostenibilità Melinda 2020 in formato PDF (circa 7 megabyte)">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
+              Scarica 2020 (7 MB)
+            </a>
+          </div>
+        </article>
+
+        <!-- Report 2016 -->
+        <article class="report-card reveal reveal-delay-4" aria-labelledby="rep2016-title">
+          <div class="report-card-top">
+            <span class="report-year" aria-hidden="true">2016</span>
+            <span class="report-badge">2016 · Prima Edizione Fondativa</span>
+            <h3 id="rep2016-title">Progetto "Trentino Frutticolo Sostenibile" — Edizione 2016</h3>
+          </div>
+          <div class="report-card-body">
+            <p class="report-desc">
+              Pubblicazione fondativa che ha inaugurato il ciclo di rendicontazione sostenibile
+              in sinergia con il consorzio provinciale APOT. Primo framework GRI volontario
+              adottato da Melinda, punto di partenza di un decennio di trasparenza.
+            </p>
+            <div class="report-meta">
+              <span class="report-meta-item">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                ~5 MB · PDF
+              </span>
+              <span class="report-meta-item">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5C3.89 3 3 3.9 3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                Pubblicato: 2017
+              </span>
+            </div>
+            <a href="https://www.apot.it/wp-content/uploads/2023/05/Bilancio_Tfs_bozza_ok.pdf"
+               target="_blank" rel="noopener noreferrer" download
+               class="btn-download"
+               aria-label="Scarica il Progetto Trentino Frutticolo Sostenibile edizione 2016 in formato PDF (circa 5 megabyte)">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
+              Scarica 2016 (5 MB)
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TABELLA ACCESSIBILE (WCAG 2.1)
+  ============================================================ -->
+  <section id="tabella" aria-labelledby="tabella-title">
+    <div class="container">
+      <span class="section-label reveal">Archivio documentale</span>
+      <h2 class="section-title reveal reveal-delay-1" id="tabella-title">
+        Riepilogo Completo dei Bilanci
+      </h2>
+      <p class="section-subtitle reveal reveal-delay-2">
+        Tabella riassuntiva per accademici, analisti e stakeholder istituzionali.
+        Tutti i documenti sono in formato PDF, conformi GRI Standards.
+      </p>
+
+      <div class="table-wrapper reveal reveal-delay-2">
+        <table role="table" aria-label="Archivio bilanci di sostenibilità Consorzio Melinda">
+          <thead>
+            <tr>
+              <th scope="col">Anno</th>
+              <th scope="col">Titolo del Documento</th>
+              <th scope="col">Descrizione</th>
+              <th scope="col">Standard</th>
+              <th scope="col">Dimensione</th>
+              <th scope="col">Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>2023</strong></td>
+              <td><strong>Bilancio di Sostenibilità Melinda 2023</strong></td>
+              <td>Indicatori GRI completi, Celle Ipogee, Piano Bio, obiettivi CSRD futuri</td>
+              <td>GRI Standards · CSRD</td>
+              <td>~10 MB</td>
+              <td>
+                <a href="https://melinda.it/wp-content/uploads/2024/02/240227_Bilancio-Melinda-2023-web-doppie.pdf"
+                   target="_blank" rel="noopener noreferrer" download
+                   class="btn-table-download green"
+                   aria-label="Scarica il Bilancio di Sostenibilità 2023 in formato PDF">
+                  <svg width="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
+                  Scarica 2023
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>2022</td>
+              <td>Bilancio di Sostenibilità Melinda 2022</td>
+              <td>Transizione 100% energia rinnovabile. Prima rendicontazione post-pandemica</td>
+              <td>GRI Standards</td>
+              <td>~8 MB</td>
+              <td>
+                <a href="https://melinda.it/sostenibilita/"
+                   target="_blank" rel="noopener noreferrer" download
+                   class="btn-table-download"
+                   aria-label="Scarica il Bilancio di Sostenibilità 2022 in formato PDF">
+                  <svg width="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
+                  Scarica 2022
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>2020</td>
+              <td>Bilancio di Sostenibilità Melinda 2020</td>
+              <td>Espansione parametri. Confusione sessuale integrata. Mappa apicoltori</td>
+              <td>GRI Standards</td>
+              <td>~7 MB</td>
+              <td>
+                <a href="https://melinda.it/sostenibilita/"
+                   target="_blank" rel="noopener noreferrer" download
+                   class="btn-table-download"
+                   aria-label="Scarica il Bilancio di Sostenibilità 2020 in formato PDF">
+                  <svg width="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
+                  Scarica 2020
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>2016</td>
+              <td>Progetto "Trentino Frutticolo Sostenibile" 2016</td>
+              <td>Prima rendicontazione. Framework volontario GRI. Coordinamento APOT</td>
+              <td>GRI (Volontario)</td>
+              <td>~5 MB</td>
+              <td>
+                <a href="https://www.apot.it/wp-content/uploads/2023/05/Bilancio_Tfs_bozza_ok.pdf"
+                   target="_blank" rel="noopener noreferrer" download
+                   class="btn-table-download"
+                   aria-label="Scarica il documento fondativo 2016 in formato PDF">
+                  <svg width="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 3h14v2H5v-2z"/></svg>
+                  Scarica 2016
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  </main>
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="nav-logo" style="margin-bottom:8px;">
+            <div class="logo-mark" style="width:40px;height:40px;" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+                <path d="M12 2C8 2 5 5 5 9c0 5 4.5 11 7 13 2.5-2 7-8 7-13 0-4-3-7-7-7z" fill="white" opacity="0.9"/>
+                <circle cx="12" cy="9" r="3" fill="#003B73"/>
+              </svg>
+            </div>
+            <span class="logo-text" style="font-size:1.15rem;">Melinda</span>
+          </div>
+          <p>
+            Consorzio Melinda S.c.a. — 16 cooperative, 4.000 famiglie, una missione:
+            produrre mele di qualità rispettando il territorio e le persone che lo abitano.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Sezioni</h4>
+          <ul>
+            <li><a href="#chi-siamo">L'Azienda</a></li>
+            <li><a href="#timeline">La Nostra Storia</a></li>
+            <li><a href="#manifesto">Manifesto ESG</a></li>
+            <li><a href="#archivio">Archivio Report</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Report</h4>
+          <ul>
+            <li><a href="https://melinda.it/wp-content/uploads/2024/02/240227_Bilancio-Melinda-2023-web-doppie.pdf" target="_blank" rel="noopener noreferrer">Bilancio 2023</a></li>
+            <li><a href="https://melinda.it/sostenibilita/" target="_blank" rel="noopener noreferrer">Bilancio 2022</a></li>
+            <li><a href="https://melinda.it/sostenibilita/" target="_blank" rel="noopener noreferrer">Bilancio 2020</a></li>
+            <li><a href="https://www.apot.it/wp-content/uploads/2023/05/Bilancio_Tfs_bozza_ok.pdf" target="_blank" rel="noopener noreferrer">Report 2016</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contatti</h4>
+          <ul>
+            <li><a href="https://melinda.it" target="_blank" rel="noopener noreferrer">melinda.it</a></li>
+            <li><a href="mailto:melinda@pec.it">melinda@pec.it</a></li>
+            <li><a href="tel:+390463469299">0463 469299</a></li>
+            <li><a href="https://melinda.it/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          © 2026 Consorzio Melinda S.c.a. · P.IVA e CF 01567870223 ·
+          Via Trento 200/9, 38023 Cles (TN)
+        </p>
+        <div class="footer-gri">
+          Rendicontazione conforme a
+          <span class="gri-badge">GRI Standards</span>
+          dal 2016
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       Commenti: spiegazione di ogni funzione per il rapporto
+  ============================================================ -->
+  <script>
+    /* ---------------------------------------------------------------
+     * 1. NAVBAR SCROLL BEHAVIOUR
+     *    Aggiunge la classe .scrolled alla nav appena l'utente supera
+     *    i 60px di scroll, attivando il background bianco e l'ombra.
+    --------------------------------------------------------------- */
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    /* ---------------------------------------------------------------
+     * 2. HAMBURGER MENU (mobile)
+     *    Toglie/aggiunge la classe .open alla lista di navigazione
+     *    per dispositivi con viewport < 680px.
+    --------------------------------------------------------------- */
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+    });
+    /* Chiude il menu al click su un link */
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    /* ---------------------------------------------------------------
+     * 3. SCROLL REVEAL
+     *    Usa IntersectionObserver per aggiungere .visible agli elementi
+     *    con classe .reveal quando entrano nel viewport (soglia 15%).
+     *    Questo produce l'effetto "fade-in dal basso" su scroll.
+    --------------------------------------------------------------- */
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target); /* fire once */
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    /* ---------------------------------------------------------------
+     * 4. ANIMATED COUNTERS
+     *    Legge l'attributo data-target su ogni .counter-number.
+     *    Quando l'elemento entra nel viewport, avvia un'animazione
+     *    numerica che porta il valore da 0 al target in ~1.8 secondi
+     *    usando una funzione easeOut per decelerazione naturale.
+    --------------------------------------------------------------- */
+    function animateCounter(el) {
+      const target   = parseInt(el.getAttribute('data-target'), 10);
+      const duration = 1800; /* ms */
+      const start    = performance.now();
+      const easeOut  = t => 1 - Math.pow(1 - t, 3);
+
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const value    = Math.round(easeOut(progress) * target);
+        el.textContent = value.toLocaleString('it-IT');
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.counter-number[data-target]')
+      .forEach(el => counterObserver.observe(el));
+
+    /* ---------------------------------------------------------------
+     * 5. HERO PARTICLES (generazione procedurale)
+     *    Crea 18 cerchi con dimensione, posizione e velocità casuali
+     *    e li inserisce nel container .hero-particles.
+     *    Ogni particella usa CSS animation 'float' con duration diversa.
+    --------------------------------------------------------------- */
+    const particlesContainer = document.getElementById('particles');
+    const NUM_PARTICLES = 18;
+    for (let i = 0; i < NUM_PARTICLES; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      const size    = Math.random() * 6 + 3;           /* 3–9px */
+      const left    = Math.random() * 100;              /* % */
+      const bottom  = Math.random() * 30;               /* % */
+      const dur     = Math.random() * 8 + 7;            /* 7–15s */
+      const delay   = Math.random() * -15;              /* stagger */
+      Object.assign(p.style, {
+        width:           size + 'px',
+        height:          size + 'px',
+        left:            left + '%',
+        bottom:          bottom + '%',
+        animationDuration:  dur + 's',
+        animationDelay:     delay + 's',
+      });
+      particlesContainer.appendChild(p);
+    }
+  </script>
+</body>
+</html>
